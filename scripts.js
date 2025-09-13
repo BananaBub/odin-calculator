@@ -64,11 +64,15 @@ function operation(a, operation, b) {
 
 console.log(operation(1, "+", 4));
 
-let buttonContainer = document.querySelector(".button-container");
+// let buttonContainer = document.querySelector(".button-container");
 
-for(let i = 1; i <= 20; i++) {
-    let button = document.createElement("button");
-    button.classList.add("button");
+// for(let i = 1; i <= 20; i++) {
+//     let button = document.createElement("button");
+//     button.classList.add("button");
 
-    buttonContainer.appendChild(button);
-}
+//     buttonContainer.appendChild(button);
+// }
+
+let buttons = Array.from(document.querySelectorAll(".button"));
+
+buttons.forEach((button) => button.addEventListener("click", () => alert("a button was clicked!")));
