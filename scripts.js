@@ -6,6 +6,27 @@ function checkIfNumber(num) {
     }
 }
 
+function checkIfOperand(key) {
+    switch(key.key) {
+        case "+":
+            operand = "+";
+            return true;
+        break;
+        case "-":
+            operand = "-";
+            return true;
+        break;
+        case "x":
+            operand = "x";
+            return true;
+        break;
+        case "/":
+            operand = "÷";
+            return true;
+        break;
+    }
+}
+
 function add(a, b) {
     if(checkIfNumber(a) && checkIfNumber(b)) {
         return parseFloat(a) + parseFloat(b);
@@ -52,8 +73,11 @@ function operation(a, operation, b) {
         case "÷":
             if(parseFloat(b) === 0) {
                 return "Don't crash this website, idiot! The answer is undefined!";
+            } else if(divide(a, b) % 1 === 0) {
+                return Math.round(divide(a, b));
+            } else {
+                return divide(a, b).toFixed(10);
             }
-            return divide(a, b).toFixed(10);
         break;
         default:
             return "Input a valid operation";
@@ -82,11 +106,15 @@ buttons.forEach((button) => button.addEventListener("click", function (e) {
         num2 += e.target.textContent;
         display.textContent = num2;
     } else if(e.target.classList.contains("operand") && phase === "final") {
-        num1 = operation(num1, operand, num2);
-        num2 = "";
-        operand = e.target.textContent;
-        display.textContent = num1;
-        hasDecimal = false;
+        if(num2) {
+            num1 = operation(num1, operand, num2);
+            num2 = "";
+            operand = e.target.textContent;
+            display.textContent = num1;
+            hasDecimal = false;
+        } else {
+            operand = e.target.textContent;
+        }
     } else if(e.target.classList.contains("decimal") && hasDecimal === false) {
         if(phase === "initial") {
             (num1 === "") ? num1 = `0.` : num1 += e.target.textContent;
@@ -96,9 +124,9 @@ buttons.forEach((button) => button.addEventListener("click", function (e) {
             display.textContent = num2;
         }
         hasDecimal = true;
-    } else if(e.target.classList.contains("equal")) {
+    } else if(e.target.classList.contains("equal") && num1 && num2) {
         display.textContent = operation(num1, operand, num2);
-        num1 = "";
+        num1 = operation(num1, operand, num2);
         num2 = "";
         operand = "";
         phase = "initial";
@@ -115,3 +143,32 @@ buttons.forEach((button) => button.addEventListener("click", function (e) {
         (num2 = num2.slice(0, -1), display.textContent = num2);
     }
 }));
+
+document.addEventListener("keydown", function (e) {
+    if(checkIfNumber(e.key)) {
+        (phase === "initial") ? (num1 += e.key, display.textContent = num1) :
+        (num2 += e.key, display.textContent = num2);
+    } else if(checkIfOperand(e)) {
+        if(phase === "initial") {
+            phase = "final";
+            hasDecimal = false;
+        } else {
+            if(num2) {
+                num1 = operation(num1, operand, num2);
+                num2 = "";
+                operand = e.target.textContent;
+                display.textContent = num1;
+                hasDecimal = false;
+            } else {
+                operand = e.target.textContent;
+            }
+        }
+    } else if(e.key === "Enter" && num1 && num2) {
+        display.textContent = operation(num1, operand, num2);
+        num1 = operation(num1, operand, num2);
+        num2 = "";
+        operand = "";
+        phase = "initial";
+        hasDecimal = false;
+    }
+})
