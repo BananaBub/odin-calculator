@@ -93,24 +93,25 @@ let hasDecimal = false;
 
 let buttons = Array.from(document.querySelectorAll(".button"));
 let display  = document.querySelector(".display");
+let displayText = document.querySelector(".display-text");
 
 buttons.forEach((button) => button.addEventListener("click", function (e) {
     if(e.target.classList.contains("number") && phase === "initial") {
         num1 += e.target.textContent;
-        display.textContent = num1;
+        displayText.textContent = num1;
     } else if(e.target.classList.contains("operand") && phase === "initial") {
         operand = e.target.textContent;
         phase = "final";
         hasDecimal = false;
     } else if(e.target.classList.contains("number") && phase === "final") {
         num2 += e.target.textContent;
-        display.textContent = num2;
+        displayText.textContent = num2;
     } else if(e.target.classList.contains("operand") && phase === "final") {
         if(num2) {
             num1 = operation(num1, operand, num2);
             num2 = "";
             operand = e.target.textContent;
-            display.textContent = num1;
+            displayText.textContent = num1;
             hasDecimal = false;
         } else {
             operand = e.target.textContent;
@@ -118,14 +119,14 @@ buttons.forEach((button) => button.addEventListener("click", function (e) {
     } else if(e.target.classList.contains("decimal") && hasDecimal === false) {
         if(phase === "initial") {
             (num1 === "") ? num1 = `0.` : num1 += e.target.textContent;
-            display.textContent = num1;
+            displayText.textContent = num1;
         } else {
             (num2 === "") ? num2 = `0.` : num2 += e.target.textContent;
-            display.textContent = num2;
+            displayText.textContent = num2;
         }
         hasDecimal = true;
     } else if(e.target.classList.contains("equal") && num1 && num2) {
-        display.textContent = operation(num1, operand, num2);
+        displayText.textContent = operation(num1, operand, num2);
         num1 = operation(num1, operand, num2);
         num2 = "";
         operand = "";
@@ -136,18 +137,18 @@ buttons.forEach((button) => button.addEventListener("click", function (e) {
         num2 = "";
         operand = "";
         phase = "initial";
-        display.textContent = "";
+        displayText.textContent = "";
         hasDecimal = false;
     } else if(e.target.classList.contains("backspace")) {
-        (phase === "initial") ? (num1 = num1.slice(0, -1), display.textContent = num1):
-        (num2 = num2.slice(0, -1), display.textContent = num2);
+        (phase === "initial") ? (num1 = num1.slice(0, -1), displayText.textContent = num1):
+        (num2 = num2.slice(0, -1), displayText.textContent = num2);
     }
 }));
 
 document.addEventListener("keydown", function (e) {
     if(checkIfNumber(e.key)) {
-        (phase === "initial") ? (num1 += e.key, display.textContent = num1) :
-        (num2 += e.key, display.textContent = num2);
+        (phase === "initial") ? (num1 += e.key, displayText.textContent = num1) :
+        (num2 += e.key, displayText.textContent = num2);
     } else if(checkIfOperand(e)) {
         if(phase === "initial") {
             phase = "final";
@@ -157,14 +158,14 @@ document.addEventListener("keydown", function (e) {
                 num1 = operation(num1, operand, num2);
                 num2 = "";
                 operand = e.target.textContent;
-                display.textContent = num1;
+                displayText.textContent = num1;
                 hasDecimal = false;
             } else {
                 operand = e.target.textContent;
             }
         }
     } else if(e.key === "Enter" && num1 && num2) {
-        display.textContent = operation(num1, operand, num2);
+        displayText.textContent = operation(num1, operand, num2);
         num1 = operation(num1, operand, num2);
         num2 = "";
         operand = "";
