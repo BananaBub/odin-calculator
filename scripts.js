@@ -67,7 +67,7 @@ console.log(operation(1, "+", 4));
 let buttonContainer = document.querySelector(".button-container");
 
 for(let i = 1; i <= 20; i++) {
-    let button = document.createElement("div");
+    let button = document.createElement("button");
     button.classList.add("button");
 
     buttonContainer.appendChild(button);

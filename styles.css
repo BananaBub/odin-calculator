@@ -1,0 +1,36 @@
+.container {
+    margin: 0px auto;
+    display: flex;
+    justify-content: center;
+    align-content: space-around;
+    flex-wrap: wrap;
+    width: 400px;
+    height: 500px;
+    background-color:rgb(175, 175, 175);
+}
+
+.output {
+    width: 380px;
+    height: 100px;
+    background-color:rgb(212, 212, 212);
+    border: 4px solid black;
+    box-sizing: border-box;
+}
+
+.button-container {
+    width: 390px;
+    height: 360px;
+    align-self: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+}
+
+.button {
+    width: 85px;
+    height: 64px;
+    background-color:rgb(219, 219, 219);
+    box-sizing: border-box;
+    border: 4px solid black;
+}
