@@ -96,6 +96,7 @@ let display  = document.querySelector(".display");
 let displayText = document.querySelector(".display-text");
 
 buttons.forEach((button) => button.addEventListener("click", function (e) {
+    displayText.style.fontSize = "40px";
     if(e.target.classList.contains("number") && phase === "initial") {
         num1 += e.target.textContent;
         displayText.textContent = num1;
@@ -142,10 +143,14 @@ buttons.forEach((button) => button.addEventListener("click", function (e) {
     } else if(e.target.classList.contains("backspace")) {
         (phase === "initial") ? (num1 = num1.slice(0, -1), displayText.textContent = num1):
         (num2 = num2.slice(0, -1), displayText.textContent = num2);
+    } else if(e.target.classList.contains("smiley")) {
+        displayText.style.fontSize = "25px";
+        displayText.textContent = "by charles andrei galedo";
     }
 }));
 
 document.addEventListener("keydown", function (e) {
+    displayText.style.fontSize = "40px";
     if(checkIfNumber(e.key)) {
         (phase === "initial") ? (num1 += e.key, displayText.textContent = num1) :
         (num2 += e.key, displayText.textContent = num2);
