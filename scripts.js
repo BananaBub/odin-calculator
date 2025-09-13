@@ -37,3 +37,38 @@ function divide(a, b) {
         return "Please input a number";
     }
 }
+
+let num1;
+let num2;
+let operand;
+
+function operation(a, operation, b) {
+    switch (operation) {
+        case "+":
+            return add(a, b);
+        break;
+        case "-":
+            return subtract(a, b);
+        break;
+        case "*":
+            return multiply(a, b);
+        break;
+        case "/":
+            return divide(a, b);
+        break;
+        default:
+            return "Input a valid operation";
+        break;
+    }
+}
+
+console.log(operation(1, "+", 4));
+
+let buttonContainer = document.querySelector(".button-container");
+
+for(let i = 1; i <= 20; i++) {
+    let button = document.createElement("div");
+    button.classList.add("button");
+
+    buttonContainer.appendChild(button);
+}
