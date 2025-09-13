@@ -73,7 +73,7 @@ function operation(a, operation, b) {
         case "÷":
             if(parseFloat(b) === 0) {
                 displayText.style.fontSize = "25px";
-                return "Don't crash this website, idiot! The answer is undefined!";
+                displayText.textContent = "Don't crash this website, idiot! The answer is undefined!";
             } else if(divide(a, b) % 1 === 0) {
                 return Math.round(divide(a, b));
             } else {
